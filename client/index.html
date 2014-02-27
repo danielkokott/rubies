@@ -14,7 +14,14 @@
 </head>
 
 <body ng-controller="RubiesCtrl">
-    <p ng-model="poster" ng-list></p>
+    <table class="table">
+    <tr ng-repeat="post in poster">
+        <td>{{post.date}}</td>
+        <td>{{post.text}}</td>
+        <td>{{post.amount}} ({{post.saldo}})</td>
+        <td></td>
+    </tr>
+    </table>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.2.min.js"></script>
