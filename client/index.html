@@ -14,24 +14,19 @@
 </head>
 
 <body ng-controller="RubiesCtrl">
-    <div ng-repeat="year in poster">
-        <h1>{{year}}</h1>
-        <!-- <table class="table">
-        <tr ng-repeat="post in poster">
-            <td>{{post}}</td>
-            <td>{{post.text}}</td>
-            <td>{{post.amount}} ({{post.saldo}})</td>
+    <div>
+        <table class="table">
+        <tr ng-repeat="transaction in transactions">
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.text}}</td>
+            <td>{{transaction.amount}} ({{transaction.saldo}})</td>
             <td></td>
         </tr>
-        </table> -->
+        </table>
     </div>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-        });
-    </script>
 </body>
 </html>
