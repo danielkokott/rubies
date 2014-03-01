@@ -14,24 +14,23 @@
 </head>
 
 <body ng-controller="RubiesCtrl">
-    <table class="table">
-    <tr ng-repeat="post in poster">
-        <td>{{post.date}}</td>
-        <td>{{post.text}}</td>
-        <td>{{post.amount}} ({{post.saldo}})</td>
-        <td></td>
-    </tr>
-    </table>
+    <div ng-repeat="year in poster">
+        <h1>{{year}}</h1>
+        <!-- <table class="table">
+        <tr ng-repeat="post in poster">
+            <td>{{post}}</td>
+            <td>{{post.text}}</td>
+            <td>{{post.amount}} ({{post.saldo}})</td>
+            <td></td>
+        </tr>
+        </table> -->
+    </div>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
-            //var today = new Date();
-            //$.getJSON("data/poster", function (data) {
-            //    console.log(data);
-            //});
         });
     </script>
 </body>

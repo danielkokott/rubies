@@ -11,7 +11,7 @@ app.get('/', function(request, response) {
 
 app.get('/data/:id', function(request, response) {
 	if (request.params.id === 'poster') {
-		parseNordeaCvs('./data/poster.csv', function(data) {
+		parseNordeaCsv('./data/poster.csv', function(data) {
 			response.send(data);
 		})
 	} else {
@@ -19,21 +19,21 @@ app.get('/data/:id', function(request, response) {
 	}
 });
 
-function parseNordeaCvs(filename, callback) {
+function parseNordeaCsv(filename, callback) {
 	var fs = require('fs');
 	fs.readFile(filename, 'utf-8', function (err, data) {
   		if (err) {
     		throw err
   		}
   		var poster = {}
-  		var temp1 = data.split("\n");
-		for (var i = 0; i < temp1.length; i++) {
-			if (temp1[i] !== '' && temp1[i] !== '\r') {
-				var temp2 = temp1[i].split(";");
-				if (temp2[4] !== 'Saldo') {
-					var temp3 = temp2[0].split("-");
-					var year = temp3[2];
-					var month = temp3[1];
+  		var lines = data.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			if (lines[i] !== '' && lines[i] !== '\r') {
+				var values = lines[i].split(";");
+				if (values[4] !== 'Saldo') {
+					var date = values[0].split("-");
+					var year = date[2];
+					var month = date[1];
 					if (poster[year] === undefined) {
 						poster[year] = {};
 					}
@@ -42,10 +42,10 @@ function parseNordeaCvs(filename, callback) {
 					}
 
  					poster[year][month].push({
-		 				"date": temp3[1] + "-" + temp3[0] + "-" + temp3[2],
-		 				"text": temp2[1],
-		 				"amount": parseCustomNumber(temp2[3]),
-		 				"saldo": parseCustomNumber(temp2[4])
+		 				"date": date[1] + "-" + date[0] + "-" + date[2],
+		 				"text": values[1],
+		 				"amount": parseCustomNumber(values[3]),
+		 				"saldo": parseCustomNumber(values[4])
 			 		});
  				}
 	    	}
