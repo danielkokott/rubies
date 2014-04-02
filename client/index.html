@@ -14,17 +14,20 @@
 </head>
 
 <body ng-controller="RubiesCtrl">
-    <div>
-        <table class="table">
-        <tr ng-repeat="transaction in transactions">
-            <td>{{transaction.date}}</td>
-            <td>{{transaction.text}}</td>
-            <td>{{transaction.amount}} ({{transaction.saldo}})</td>
-            <td></td>
-        </tr>
-        </table>
-    </div>
+    <div class="container">
+    <!--     <table class="table">
+            <tr ng-repeat="transaction in data.transactions">
+                <td>{{transaction.date}}</td>
+                <td>{{transaction.text}}</td>
+                <td>{{transaction.amount}} ({{transaction.saldo}})</td>
+                <td></td>
+            </tr>
+        </table> -->
+        <div ng-repeat="transaction in currentTransactions" class="row">
+            <div class="col-md-3">{{transaction.text}}</div>
+        </div>
 
+    </div>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

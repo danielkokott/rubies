@@ -12,62 +12,7 @@ app.get('/', function(request, response) {
 app.get('/account/:id', function(request, response) {
 	if (request.params.id === 'test') {
 		
-		var recurring = [
-			{
-				"month": "01",
-				"data": []
-			},
-			{
-				"month": "02",
-				"data": []
-			},
-			{
-				"month": "03",
-				"data": []
-			},
-			{
-				"month": "04",
-				"data": []
-			},
-			{
-				"month": "05",
-				"data": []
-			},
-			{
-				"month": "06",
-				"data": []
-			},
-			{
-				"month": "07",
-				"data": []
-			},
-			{
-				"month": "08",
-				"data": []
-			},
-			{
-				"month": "09",
-				"data": []
-			},
-			{
-				"month": "10",
-				"data": []
-			},
-			{
-				"month": "11",
-				"data": []
-			},
-			{
-				"month": "12",
-				"data": []
-			},
-		];
-		
-		var account = {
-			"account": "danielkokott",
-			"start_saldo": 67516.19,
-			"recurring": recurring
-		};
+		var account = require('./data/recur.json');
 
 		parseNordeaCsv('./data/poster.csv', function(data) {
 			account.transactions = data;
@@ -80,15 +25,15 @@ app.get('/account/:id', function(request, response) {
 
 function parseNordeaCsv(filename, callback) {
 	var fs = require('fs');
-	fs.readFile(filename, 'utf-8', function (err, data) {
+	fs.readFile(filename, {encoding: 'utf8'}, function (err, data) {
   		if (err) {
     		throw err;
   		}
 
   		var poster = data.split("\n")
   		.filter(invalidNordeaCsvLine)
-  		.map(parseNordeaCsvLine)
-  		.sort(newestPostFirst);
+  		.map(parseNordeaCsvLine);
+  		//.sort(newestPostFirst);
 
 		callback(poster);
 	})
@@ -98,25 +43,18 @@ function parseNordeaCsv(filename, callback) {
 	}
 
 	function parseNordeaCsvLine(value, index, array) {
+		console.log("TÆST");
+ 		console.log(value);
 		var fields = value.split(";");
 		var date = fields[0].split("-");
 		return {
-			"date": date[1] + "-" + date[0] + "-" + date[2],
+			"year": parseInt(date[2]),
+			"month": parseInt(date[1]) - 1,
+			"orgdate": fields[0],
 			"text": fields[1],
 			"amount": parseCustomNumber(fields[3]),
 			"saldo": parseCustomNumber(fields[4])
  		};
-	}
-
-	function tet(value, index, array) {
-		var year = new Date(value.date).getYear() + 1900;
-		if (!this.some(isYear)) {
-			this.push({year: year});
-		}
-	}
-
-	function isYear(value, index, array) {
-		return value.year === year;
 	}
 
 	function newestPostFirst(a, b) {
